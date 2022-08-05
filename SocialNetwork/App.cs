@@ -118,20 +118,15 @@ namespace SocialNetwork
 
             using var dbContext = new SocialNetworkDbContext();
 
-            var user = dbContext.Users.Include(u => u.Posts).SingleOrDefault(u => u.Id == _userId);
+            var post = dbContext.Posts.Include(p => p.userId).SingleOrDefault(p => p.postId == postId);
 
             bool successfullyRemoved = false;
 
-            foreach (Post post in user.Posts)
+            if(post != null)
             {
-                if (post.Id == postId)
-                {
-                    user.Posts.Remove(post);
-                    dbContext.SaveChanges();
-
-                    successfullyRemoved = true;
-                    break;
-                }
+                dbContext.Posts.Remove(post);
+                dbContext.SaveChanges();
+                successfullyRemoved = true;
             }
 
             if (successfullyRemoved == false)
