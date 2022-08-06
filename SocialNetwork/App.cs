@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SocialNetworkDb;
+using SocialNetworkDb.DbContext;
 using SocialNetworkDB.Model;
 
 namespace SocialNetwork
@@ -118,7 +118,7 @@ namespace SocialNetwork
 
             using var dbContext = new SocialNetworkDbContext();
 
-            var post = dbContext.Posts.Include(p => p.userId).SingleOrDefault(p => p.postId == postId);
+            var post = dbContext.Posts.SingleOrDefault(p => p.Id == postId && p.UserId == _userId);
 
             bool successfullyRemoved = false;
 
