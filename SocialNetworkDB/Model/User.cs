@@ -1,5 +1,4 @@
-﻿
-namespace SocialNetworkDB.Model
+﻿namespace SocialNetworkDb.Model
 {
     public class User
     {

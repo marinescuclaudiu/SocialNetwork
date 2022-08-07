@@ -1,7 +1,6 @@
-﻿
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace SocialNetworkDB.Model
+namespace SocialNetworkDb.Model
 {
     public class Post
     {

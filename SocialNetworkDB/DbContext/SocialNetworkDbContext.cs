@@ -1,8 +1,7 @@
-﻿
-namespace SocialNetworkDb.DbContext
+﻿namespace SocialNetworkDb.DbContext
 {
     using Microsoft.EntityFrameworkCore;
-    using SocialNetworkDB.Model;
+    using SocialNetworkDb.Model;
     public class SocialNetworkDbContext : DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

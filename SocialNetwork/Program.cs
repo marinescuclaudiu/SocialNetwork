@@ -1,5 +1,4 @@
-﻿
-namespace SocialNetwork
+﻿namespace SocialNetwork
 {
     internal class Program
     {

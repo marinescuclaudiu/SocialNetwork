@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SocialNetworkDb.DbContext;
-using SocialNetworkDB.Model;
+using SocialNetworkDb.Model;
 
 namespace SocialNetwork
 {
