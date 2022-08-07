@@ -33,7 +33,7 @@ namespace SocialNetwork
             if (user == null)
             {
                 Console.Write("Account has been registered successfully. ");
-                user = new User { Username = _username };
+                user = new User { Username = _username, CreationDate = DateTime.Now };
                 dbContext.Users.Add(user);
                 dbContext.SaveChanges();
             }
