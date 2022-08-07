@@ -16,5 +16,7 @@
 
         public DbSet<Post> Posts { get; set; }
 
+        public DbSet<Reaction> Reactions { get; set; }
+
     }
 }

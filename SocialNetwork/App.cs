@@ -68,13 +68,19 @@ namespace SocialNetwork
         {
             using var dbContext = new SocialNetworkDbContext();
 
-            var user = dbContext.Users.Include(u => u.Posts).SingleOrDefault(u => u.Id == _userId);
+            var user = dbContext.Users.Include(u => u.Posts).ThenInclude(u => u.Reactions).SingleOrDefault(u => u.Id == _userId);
 
             Console.WriteLine($"You have {user.Posts.Count} posts.");
 
             foreach (var post in user.Posts)
             {
-                Console.WriteLine($"Post id = {post.Id} Text = {post.Text}");
+                Console.Write($"Post id = {post.Id} Text = {post.Text} Reaction count = {post.Reactions.Count} ");
+                Console.Write("Reactions: ");
+                foreach(var reaction in post.Reactions)
+                {
+                    Console.Write(reaction.ReactionType.ToString() + ' ');
+                }
+                Console.WriteLine();
             }
         }
 
@@ -122,7 +128,7 @@ namespace SocialNetwork
 
             bool successfullyRemoved = false;
 
-            if(post != null)
+            if (post != null)
             {
                 dbContext.Posts.Remove(post);
                 dbContext.SaveChanges();
@@ -140,13 +146,72 @@ namespace SocialNetwork
 
         }
 
+        private static void AddRemoveReaction()
+        {
+            using var dbContext = new SocialNetworkDbContext();
+
+            Console.WriteLine("Enter the id of the post to which you want to add a reaction: ");
+
+            int postId = int.Parse(Console.ReadLine());
+
+            var post = dbContext.Posts.SingleOrDefault(p => p.Id == postId && p.UserId != _userId);
+
+            if(post == null)
+            {
+                Console.WriteLine("Post's id does not correct.");
+                return;
+            }
+
+            Reaction existingReaction = dbContext.Reactions.SingleOrDefault(r => r.PostId == postId && r.UserId == _userId);
+
+            if(existingReaction != null)
+            {
+                dbContext.Reactions.Remove(existingReaction);
+
+                Console.WriteLine("You already reacted to this post. So now, we delete your reaction.");
+            }
+            else
+            {
+                Console.WriteLine("Enter a number for the type of reaction:");
+                ShowReactionMenu();
+                Reaction.Type reactionType = (Reaction.Type)int.Parse(Console.ReadLine());
+
+                if(Enum.IsDefined(typeof(Reaction.Type), reactionType) || reactionType == 0)
+                {
+                    Console.WriteLine("Success!");
+
+                    existingReaction = new Reaction { UserId = _userId, PostId = post.Id, ReactionType = reactionType };
+                    dbContext.Reactions.Add(existingReaction);
+                }
+                else
+                {
+                    Console.WriteLine("Your input is not correct");
+                }
+            }
+
+            dbContext.SaveChanges();
+        }
+
+        private static void ShowReactionMenu()
+        {
+            Console.WriteLine();
+            Console.WriteLine("1 - Like");
+            Console.WriteLine("2 - Dislike");
+            Console.WriteLine("3 - Anger");
+            Console.WriteLine("4 - Sadness");
+            Console.WriteLine();
+        }
+
         private static void ShowMenu()
         {
+            Console.WriteLine();
             Console.WriteLine("1 - Create a post");
             Console.WriteLine("2 - Show all my posts.");
             Console.WriteLine("3 - Modify my first post.");
             Console.WriteLine("4 - Delete a post.");
+            Console.WriteLine("5 - Add/Remove a reaction.");
             Console.WriteLine("0 - Exit program.");
+            Console.WriteLine();
         }
 
         private static void ExecuteCommands()
@@ -175,7 +240,10 @@ namespace SocialNetwork
                     case 4:
                         DeletePost();
                         break;
-
+                    case 5:
+                        AddRemoveReaction();
+                        break;
+                        
                     case 0:
                         break;
 
