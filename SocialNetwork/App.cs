@@ -17,7 +17,7 @@ namespace SocialNetwork
         private static void InitializeDatabase()
         {
             using var dbContext = new SocialNetworkDbContext();
-            dbContext.Database.EnsureCreated();
+            dbContext.Database.Migrate();
         }
 
         //Check if a user is already in DB, if not create it
