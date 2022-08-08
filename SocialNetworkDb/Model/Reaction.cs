@@ -1,29 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using static SocialNetworkDb.Utility.Enumerations;
 
 namespace SocialNetworkDb.Model
 {
-    public enum Type
-    {
-        Undefined,
-        Like,
-        Dislike,
-        Anger,
-        Sadness
-    }
     public class Reaction
     {
-        public enum Type
-        {
-            Undefined,
-            Like,
-            Dislike,
-            Anger,
-            Sadness
-        }
         public int Id { get; set; }
 
         public int UserId { get; set; }
@@ -33,7 +13,7 @@ namespace SocialNetworkDb.Model
         public int PostId { get; set; }
         public Post Post { get; set; }
 
-        public Type ReactionType { get; set; }
+        public ReactionType ReactionType { get; set; }
 
     }
 }

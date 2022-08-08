@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SocialNetworkDb.DbContext;
 using SocialNetworkDb.Model;
+using SocialNetworkDb.Utility;
 
 namespace SocialNetwork
 {
@@ -174,9 +175,9 @@ namespace SocialNetwork
             {
                 Console.WriteLine("Enter a number for the type of reaction:");
                 ShowReactionMenu();
-                Reaction.Type reactionType = (Reaction.Type)int.Parse(Console.ReadLine());
+                Enumerations.ReactionType reactionType = (Enumerations.ReactionType)int.Parse(Console.ReadLine());
 
-                if(Enum.IsDefined(typeof(Reaction.Type), reactionType) || reactionType == 0)
+                if(Enum.IsDefined(typeof(Enumerations.ReactionType), reactionType) && reactionType != 0)
                 {
                     Console.WriteLine("Success!");
 
